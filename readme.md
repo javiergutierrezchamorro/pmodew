@@ -1,4 +1,4 @@
-# PMODE/W DOS EXTENDER
+# PMODE/W AND PMODE/WI DOS EXTENDER INCLUDING SOURCE CODE (MIT LICENSE)
 
 This repository contains the source code of PMODE/W v1.33, a 32-bit Protected Mode DOS extender for the Watcom C/C++ Compiler released in 1997-01, for the purpose of archival and preservation. As of 2022-01, the original host website is still [functional](http://www.sid6581.net/pmodew/). As of 2023-07 it was updated under [MIT license](http://www.sid6581.net/pmodew/license.txt).
 
