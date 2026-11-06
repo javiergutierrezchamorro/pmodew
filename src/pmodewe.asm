@@ -35,6 +35,38 @@ PM_PAGETABLES   = 4
 PM_PAMPAGEMAX   = 1
 PM_OPTIONS      = 1
 
+;------------------------------------------------------------------------------
+; ARREGLO (fix) para el build 1.34-dev de 2007:
+; _openexe2 (VARTYPE=1) lee los primeros 21 bytes de la imagen de carga y los
+; copia a las variables del kernel _pm_pagetables.._pm_maxextmem (19 bytes,
+; ver PMODEWK.ASM) + 2 bytes mas a _lowmin. Cuando PMODE/W se empaqueta con
+; PMWLITE, es el empaquetador quien instala ese bloque; un enlazado directo
+; con TLINK no lo instala, y sin el, _pm_selectors se queda a 0, el limite del
+; GDT acaba en 7Fh y el extensor se pega (tambien en DOSBox:
+; "CPU_SetSegGeneral: Stack segment beyond limits").
+; Este segmento se declara ANTES que cualquier otro para que TLINK lo coloque
+; en el offset 0 de la imagen de carga. Los valores son los mismos por
+; defecto de la 1.33/1.33i oficial, tomados de los EQU de arriba, de modo que
+; PMWSETUP y PMWBIND siguen funcionando igual.
+;------------------------------------------------------------------------------
+pmcfg           segment para public use16 'pmwcfg'
+pm_cfg          db      PM_PAGETABLES           ; 00h _pm_pagetables (tablas de paginas VCPI)
+                dw      PM_SELECTORS            ; 01h _pm_selectors (selectores GDT)
+                dw      PM_RMSTACKLEN           ; 03h _pm_rmstacklen (paragrafos)
+                dw      PM_PMSTACKLEN           ; 05h _pm_pmstacklen (paragrafos)
+                db      PM_RMSTACKS             ; 07h _pm_rmstacks
+                db      PM_PMSTACKS             ; 08h _pm_pmstacks
+                db      PM_CALLBACKS            ; 09h _pm_callbacks
+                db      PM_MODE                 ; 0Ah _pm_mode (bit0: VCPI antes de DPMI)
+                db      PM_PAMPAGEMAX           ; 0Bh _pm_pampagemax
+                db      0,0                     ; 0Ch (2 bytes de relleno de las vars del kernel)
+                db      PM_OPTIONS              ; 0Eh _pm_options
+                dd      EXTMAX                  ; 0Fh _pm_maxextmem
+                dw      LOWMIN                  ; 13h -> _lowmin (lo lee el lodsw de _openexe2)
+pm_banner       db      'PMODE/W v1.34'         ; 15h rotulo que comprueba PMWSETUP
+                db      (48-($-pm_cfg)) dup(0)  ; relleno hasta 3 paragrafos: el kernel
+pmcfg           ends                            ;  mantiene su alineacion a paragrafo
+
 PMODE_TEXT      segment dword public use16 'CODE'
 PMODE_TEXT      ends
 pmcode16        segment para public use16 'CODE'
