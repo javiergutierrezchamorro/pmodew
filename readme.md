@@ -2,6 +2,9 @@
 
 This repository contains the source code of PMODE/W v1.33 and v1.34-dev, a 32-bit Protected Mode DOS extender for the Watcom C/C++ Compiler released in 1997-01, for the purpose of archival and preservation. As of 2022-01, the original host website is still [functional](http://www.sid6581.net/pmodew/). As of 2023-07 it was updated under [MIT license](http://www.sid6581.net/pmodew/license.txt).
 
+<img width="720" height="400" alt="image" src="https://github.com/user-attachments/assets/2057e89d-1b3b-4922-ae9b-9eb80dc82756" />
+
+
 File and directory names have been converted to lowercase, and the directory structure has been reorganized from the original archives. Object files and executables from the source archive (pmw133s.zip) have been removed (the pmodew.exe causes DOSBox to crash), while the contents from the original binary distribution (pmw133.zip) are now in the bin/ subdirectory. Source code, examples, and documentation have similarly been placed in their own respective subdirectories. The *scaled down ultra-tiny version*(PMODE/WI) binaries and documentation have also been placed in the respective directories.
 
 PMODE/W is Copyright &copy; 1994-2023, Charles Scheffold and Thomas Pytel.
